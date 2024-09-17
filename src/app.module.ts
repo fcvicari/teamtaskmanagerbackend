@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { JwtModule } from '@nestjs/jwt';
+import { PrismaService } from './database/prisma.service';
+import { SingInController } from './singin/singin.controller';
+import { SingupController } from './singup/singup.controller';
+import { UserRepository } from './user/user.repository';
+import { PasswordHash } from './utils/password.hash';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '12h' },
+    }),
+  ],
+  controllers: [SingupController, SingInController],
+  providers: [PasswordHash, PrismaService, UserRepository],
 })
 export class AppModule {}
