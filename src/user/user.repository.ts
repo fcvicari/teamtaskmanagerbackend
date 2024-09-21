@@ -12,9 +12,31 @@ export class UserRepository {
     });
   }
 
+  async activateUser(id: string): Promise<Users> {
+    return await this.prisma.users.update({
+      where: {
+        id,
+      },
+      data: {
+        active: true,
+      },
+    });
+  }
+
   async findByEmail(where: Prisma.UsersWhereUniqueInput): Promise<Users> {
     return await this.prisma.users.findUnique({
       where,
+    });
+  }
+
+  async alterPassword(id: string, password: string): Promise<Users> {
+    return await this.prisma.users.update({
+      where: {
+        id,
+      },
+      data: {
+        password,
+      },
     });
   }
 }

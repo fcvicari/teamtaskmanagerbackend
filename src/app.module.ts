@@ -4,6 +4,7 @@ import { PrismaService } from './database/prisma.service';
 import { SingInController } from './singin/singin.controller';
 import { SingupController } from './singup/singup.controller';
 import { UserRepository } from './user/user.repository';
+import { UserTokenRepository } from './user/userToken.repository';
 import { PasswordHash } from './utils/password.hash';
 
 @Module({
@@ -14,6 +15,6 @@ import { PasswordHash } from './utils/password.hash';
     }),
   ],
   controllers: [SingupController, SingInController],
-  providers: [PasswordHash, PrismaService, UserRepository],
+  providers: [PasswordHash, PrismaService, UserRepository, UserTokenRepository],
 })
 export class AppModule {}

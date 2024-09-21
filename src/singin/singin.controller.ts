@@ -6,6 +6,8 @@ import { PasswordHash } from 'src/utils/password.hash';
 import { SingInDTO } from './singin.Dto';
 
 const UnauthorizedUser = 'Unauthorized user.';
+const AccountInactive =
+  UnauthorizedUser + ' Your account is currently inactive.';
 
 @Controller('singin')
 export class SingInController {
@@ -24,6 +26,10 @@ export class SingInController {
     const user = await this.user.findByEmail({ email });
     if (!user) {
       throw new AppError(UnauthorizedUser, 401);
+    }
+
+    if (!user.active) {
+      throw new AppError(AccountInactive, 401);
     }
 
     const validPassword = await this.hash.compareHash(password, user.password);
