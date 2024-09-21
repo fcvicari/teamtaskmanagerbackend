@@ -63,7 +63,7 @@ export class SingupController {
         userID: userToken.userID,
       });
 
-      return { user };
+      return { ...user, password: undefined };
     }
 
     return null;
