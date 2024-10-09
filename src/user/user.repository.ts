@@ -23,6 +23,10 @@ export class UserRepository {
     });
   }
 
+  async getUniqueById(where: Prisma.UsersWhereUniqueInput): Promise<Users> {
+    return await this.prisma.users.findUnique({ where });
+  }
+
   async findByEmail(where: Prisma.UsersWhereUniqueInput): Promise<Users> {
     return await this.prisma.users.findUnique({
       where,
@@ -38,6 +42,24 @@ export class UserRepository {
         password,
         active: true,
       },
+    });
+  }
+
+  async update(params: {
+    where: Prisma.UsersWhereUniqueInput;
+    data: Prisma.UsersUpdateInput;
+  }): Promise<Users> {
+    const { data, where } = params;
+
+    return await this.prisma.users.update({
+      data,
+      where,
+    });
+  }
+
+  async delete(where: Prisma.UsersWhereUniqueInput): Promise<any> {
+    await this.prisma.users.delete({
+      where,
     });
   }
 }
