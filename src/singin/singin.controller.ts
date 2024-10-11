@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from 'src/user/user.repository';
-import { AppError } from 'src/utils/app.erro';
-import { PasswordHash } from 'src/utils/password.hash';
+import { UserRepository } from '../user/user.repository';
+import { AppError } from '../utils/app.erro';
+import { PasswordHash } from '../utils/password.hash';
 import { SingInDTO } from './singin.Dto';
 
 const UnauthorizedUser = 'Unauthorized user.';
@@ -20,7 +20,7 @@ export class SingInController {
   ) {}
 
   @Post()
-  async postNewUser(@Body() body: SingInDTO) {
+  async postSingIn(@Body() body: SingInDTO) {
     const { email, password } = body;
 
     const user = await this.user.findByEmail({ email });

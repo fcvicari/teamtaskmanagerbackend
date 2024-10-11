@@ -63,15 +63,15 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
+    "roots": [
+      "src",
+      "test"
     ],
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": { "^.+\\.(t|j)s$": "ts-jest" },
+    "collectCoverageFrom": [ "src/**/*.{js,jsx,ts,tsx}" ],
     "coverageDirectory": "../coverage",
+    "coverageReporters": ["lcov", "text"],
     "testEnvironment": "node"
   }
 }

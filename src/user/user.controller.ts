@@ -7,11 +7,11 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { UserRepository } from 'src/user/user.repository';
-import { UserTokenRepository } from 'src/user/userToken.repository';
-import { AppError } from 'src/utils/app.erro';
-import { PasswordHash } from 'src/utils/password.hash';
+import { AuthGuard } from '../auth/auth.guard';
+import { UserRepository } from '../user/user.repository';
+import { UserTokenRepository } from '../user/userToken.repository';
+import { AppError } from '../utils/app.erro';
+import { PasswordHash } from '../utils/password.hash';
 import { UserPasswordDTO } from './password.Dto';
 import { UserDataDTO } from './userData.Dto';
 

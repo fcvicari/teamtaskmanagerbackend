@@ -1,6 +1,5 @@
-import { compare, hash } from 'bcrypt';
-
 import { Injectable } from '@nestjs/common';
+import { compare, hash } from 'bcrypt';
 
 @Injectable()
 export class PasswordHash {

@@ -1,10 +1,10 @@
 import { Body, Controller, Post, Query } from '@nestjs/common';
 import { differenceInHours } from 'date-fns';
-import { UserDTO } from 'src/user/user.Dto';
-import { UserRepository } from 'src/user/user.repository';
-import { UserTokenRepository } from 'src/user/userToken.repository';
-import { AppError } from 'src/utils/app.erro';
-import { PasswordHash } from 'src/utils/password.hash';
+import { UserDTO } from '../user/user.Dto';
+import { UserRepository } from '../user/user.repository';
+import { UserTokenRepository } from '../user/userToken.repository';
+import { AppError } from '../utils/app.erro';
+import { PasswordHash } from '../utils/password.hash';
 
 @Controller()
 export class SingupController {
