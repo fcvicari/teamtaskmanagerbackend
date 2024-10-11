@@ -21,7 +21,9 @@ describe('SinginController Tests', () => {
         {
           provide: PrismaService,
           useValue: {
-            onModuleInit: jest.fn().mockResolvedValue(true),
+            onModuleInit: jest.fn().mockImplementation(() => {
+              return Promise.resolve(true);
+            }),
           },
         },
       ],
