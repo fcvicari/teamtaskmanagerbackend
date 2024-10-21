@@ -54,7 +54,7 @@ export class SingupController {
     const userToken = await this.userToken.findById({ id: token });
     if (userToken) {
       if (differenceInHours(Date.now(), userToken.createdAt) > 2) {
-        throw new AppError('Token expired.');
+        throw new AppError('Token expired.', 400);
       }
 
       const user = await this.user.activateUser(userToken.userID);
@@ -75,18 +75,21 @@ export class SingupController {
     const { password } = body;
 
     const userToken = await this.userToken.findById({ id: token });
+    if (userToken) {
+      if (differenceInHours(Date.now(), userToken.createdAt) > 2) {
+        throw new AppError('Token expired.', 400);
+      }
 
-    if (differenceInHours(Date.now(), userToken.createdAt) > 2) {
-      throw new AppError('Token expired.');
+      const newPassword = await this.hash.generateHash(password);
+
+      const user = await this.user.alterPassword(userToken.userID, newPassword);
+
+      await this.userToken.deleteAll({
+        userID: userToken.userID,
+      });
+
+      return { ...user, password: undefined };
     }
-
-    const newPassword = await this.hash.generateHash(password);
-
-    await this.user.alterPassword(userToken.userID, newPassword);
-
-    await this.userToken.deleteAll({
-      userID: userToken.userID,
-    });
 
     return null;
   }
@@ -108,6 +111,7 @@ export class SingupController {
       });
 
       //sendEmailActivate(userToken.id);
+      return true;
     }
 
     return null;

@@ -1,18 +1,9 @@
+// prisma.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaClient } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
-jest.mock('@prisma/client', () => {
-  return {
-    PrismaClient: jest.fn().mockImplementation(() => ({
-      $connect: jest.fn(),
-    })),
-  };
-});
-
-describe('PrismaService Test', () => {
+describe('PrismaService', () => {
   let prismaService: PrismaService;
-  let prismaClientMock: PrismaClient;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,12 +11,21 @@ describe('PrismaService Test', () => {
     }).compile();
 
     prismaService = module.get<PrismaService>(PrismaService);
-    prismaClientMock = new PrismaClient(); // mockado pelo jest
   });
 
-  it('Call $connect in the onModuleInit method', async () => {
-    await prismaService.onModuleInit();
+  it('should be defined', () => {
+    expect(prismaService).toBeDefined();
+  });
 
-    expect(prismaClientMock.$connect).toHaveBeenCalled();
+  describe('onModuleInit', () => {
+    it('should call $connect method', async () => {
+      const $connectSpy = jest
+        .spyOn(prismaService, '$connect')
+        .mockResolvedValueOnce();
+
+      await prismaService.onModuleInit();
+
+      expect($connectSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });

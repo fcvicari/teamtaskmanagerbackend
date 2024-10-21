@@ -21,24 +21,21 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new AppError(UnauthorizedUser, 401);
     }
-    try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: process.env.JWT_SECRET,
-      });
 
-      const existsUser = await this.user.getUniqueById({ id: payload.id });
-      if (!existsUser) {
-        throw new AppError(UnauthorizedUser, 401);
-      }
+    const payload = await this.jwtService.verifyAsync(token, {
+      secret: process.env.JWT_SECRET,
+    });
 
-      if (existsUser.email !== payload.email) {
-        throw new AppError(UnauthorizedUser, 401);
-      }
-
-      request['user'] = payload;
-    } catch {
+    const existsUser = await this.user.getUniqueById({ id: payload.id });
+    if (!existsUser) {
       throw new AppError(UnauthorizedUser, 401);
     }
+
+    if (existsUser.email !== payload.email) {
+      throw new AppError(UnauthorizedUser, 401);
+    }
+
+    request['user'] = payload;
     return true;
   }
 

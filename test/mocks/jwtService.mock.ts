@@ -6,5 +6,8 @@ export const jwtServiceMock = {
     signAsync: jest.fn().mockImplementation((payload) => {
       return Promise.resolve(payload);
     }),
+    verifyAsync: jest.fn().mockImplementation((payload) => {
+      return Promise.resolve(payload);
+    }),
   },
 };
